@@ -22,24 +22,17 @@ hours_left = HOURS_IN_WEEK  # number of hours that remain in the week
 knol_total = 0
 last_coffee_time = HOURS_IN_WEEK
 
-
-
 def knols_per_hour(subj, is_alert):
    subjects = {"CSC": 4,
-                "MAT": 2,
-                "ESC": 2,
-                "PHY": 2,
-                "CIV": 2,}
+               "MAT": 2,
+               "ESC": 2,
+               "PHY": 2,
+               "CIV": 2,}
    knols_gained = 0
    knols_gained = subjects[subj]
    if not is_alert:
       knols_gained /= 2
-
-def attend_lecture(subj, hrs):
-   if hours_left >= hrs and hrs > 0:
-      hours_left -= hrs
-      knols_earned = knols_per_hour(subj,is_alert())*hrs
-
+   
 def drink_coffee():
    global last_coffee_time
    global hours_left
@@ -66,7 +59,15 @@ def is_alert():
       return(True)
    else:
       return(False)
-    
+
+def attend_lecture(subj, hrs):
+   global knol_total
+   global hours_left
+   if hours_left >= hrs and hrs > 0:
+      hours_left -= hrs
+      knols_earned = knols_per_hour(subj,is_alert())*hrs
+   knol_total+=knols_earned
+
 def get_knol_amount():
    global knol_total
    return(knol_total)
