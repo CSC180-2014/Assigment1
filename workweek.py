@@ -23,15 +23,17 @@ knol_total = 0
 last_coffee_time = HOURS_IN_WEEK
 
 def knols_per_hour(subj, is_alert):
-   subjects = {"CSC": 4,
-               "MAT": 2,
-               "ESC": 2,
-               "PHY": 2,
-               "CIV": 2,}
-   knols_gained = 0
-   knols_gained = subjects[subj]
+   if subj is 'CSC':
+     knols_gained=4
+   elif subj is "MAT" or subj is "ESC" or subj is "PHY" or subj is "CIV":
+     knols_gained=2
+   else:
+     return(0)
+
    if not is_alert:
       knols_gained /= 2
+      
+   return(knols_gained)
    
 def drink_coffee():
    global last_coffee_time
@@ -53,7 +55,6 @@ def is_alert():
       return(False)
    else:
       sleep_percentage = hours_slept/hours_elapsed
-      print(sleep_percentage)
 
    if (sleep_percentage > MIN_SLEEP_PRECENT) or (last_coffee_time-hours_left < 1):
       return(True)
@@ -71,7 +72,6 @@ def attend_lecture(subj, hrs):
 def get_knol_amount():
    global knol_total
    return(knol_total)
-
 
 def sleep(hrs):
    """
