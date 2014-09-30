@@ -20,7 +20,8 @@ MIN_SLEEP_PRECENT = 0.3
 hours_slept = 0  # total number of hours that the student has slept so far
 hours_left = HOURS_IN_WEEK  # number of hours that remain in the week
 knol_total = 0
-last_coffee_time = HOURS_IN_WEEK
+last_coffee_time = 0
+coffee_crash = False
 
 def knols_per_hour(subj, is_alert):
    if subj is 'CSC':
@@ -30,14 +31,19 @@ def knols_per_hour(subj, is_alert):
    else:
      return(0)
 
-   if not is_alert:
-      knols_gained /= 2
-      
-   return(knols_gained)
+   if is_alert:
+      return(knols_gained)
+   else:
+      knols_gained /=2
+      return(knols_gained)
    
 def drink_coffee():
    global last_coffee_time
    global hours_left
+   global coffee_crash
+   if abs(last_coffee_time-hours_left) < 3:
+      coffee_crash = True
+   
    last_coffee_time = hours_left
    return
 
@@ -47,27 +53,36 @@ def is_alert():
    global HOURS_IN_WEEK
    global MIN_SLEEP_PRECENT
    global last_coffee_time
+   global coffee_crash
    hours_elapsed = HOURS_IN_WEEK-hours_left
-   sleep_percentage=0
-    
+   
+   if coffee_crash:
+      return(False)
+   
    if hours_elapsed == 0:
       sleep_percentage=0
-      return(False)
    else:
       sleep_percentage = hours_slept/hours_elapsed
 
-   if (sleep_percentage > MIN_SLEEP_PRECENT) or (last_coffee_time-hours_left < 1):
+   if (abs(last_coffee_time-hours_left) <= 1):
+      return(True)
+   elif (sleep_percentage > MIN_SLEEP_PRECENT):
       return(True)
    else:
       return(False)
+   
 
 def attend_lecture(subj, hrs):
    global knol_total
    global hours_left
    if hours_left >= hrs and hrs > 0:
-      hours_left -= hrs
+      
       knols_earned = knols_per_hour(subj,is_alert())*hrs
-   knol_total+=knols_earned
+      hours_left -= hrs
+      knol_total+=knols_earned
+      print(knols_earned)
+   else:
+      return
 
 def get_knol_amount():
    global knol_total
