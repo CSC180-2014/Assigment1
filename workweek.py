@@ -11,6 +11,11 @@ Author: Michael Guerzhoy.  Last modified: Sept. 22, 2014
 
 """
 
+"""
+Submitted by: Ryan Tam, Francis Kang
+CSC180
+"""
+
 
 # The total number of hours from 12AM Monday to 5PM Friday.
 HOURS_IN_WEEK = 24 * 5 - 7
