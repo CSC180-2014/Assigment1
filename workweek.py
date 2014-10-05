@@ -26,8 +26,8 @@ MIN_COFFEE_INTERVAL = 3 # The min hours that must pass before the student can dr
 # Global variables.
 hours_slept = 0  # total number of hours that the student has slept so far
 hours_left = HOURS_IN_WEEK  # number of hours that remain in the week
-knol_total = 0 #total knoledge gained durring the week
-last_coffee_time = 0 #the last time the sudent drank coffee
+knol_total = 0 # total knoledge gained durring the week
+last_coffee_time = 0 # the last time the sudent drank coffee
 coffee_crash = False # if the studented has drank too much coffee and has crashed
 
 '''
@@ -36,7 +36,7 @@ in account if the student is alert. Function expects a valid course code (string
 a boolen for if the student is awake or not.
 '''
 def knols_per_hour(subj, is_alert):
-   #Deterimns how many knols are gained based on the course
+   # Deterimns how many knols are gained based on the course
    if subj is 'CSC':
       knols_gained=4
    elif subj is "MAT" or subj is "ESC" or subj is "PHY" or subj is "CIV":
@@ -44,7 +44,7 @@ def knols_per_hour(subj, is_alert):
    else:
       return
 
-   #If the student is not alert then they get half the knoledge
+   # If the student is not alert then they get half the knoledge
    if is_alert:
       return(knols_gained)
    else:
@@ -62,11 +62,11 @@ def drink_coffee():
    global coffee_crash
    global MIN_COFFEE_INTERVAL
    
-   #Check to see if student has crashed
+   # Check to see if student has crashed
    if abs(last_coffee_time-hours_left) < MIN_COFFEE_INTERVAL:
       coffee_crash = True
    
-   #Record the last time the student drank coffee
+   # Record the last time the student drank coffee
    last_coffee_time = hours_left
    return
 
@@ -82,20 +82,20 @@ def is_alert():
    global last_coffee_time
    global coffee_crash
    
-   if coffee_crash:  #if the student has crashed on coffee already they cannot be alet for rest of week
+   if coffee_crash:  # if the student has crashed on coffee already they cannot be alet for rest of week
       return(False)
-   if (abs(last_coffee_time-hours_left) <= 1):  #if the student has had coffee he is awake
+   if (abs(last_coffee_time-hours_left) <= 1):  # if the student has had coffee he is awake
       return(True)
    
-   #calcuate the hours that have elapsed
+   # calcuate the hours that have elapsed
    hours_elapsed = HOURS_IN_WEEK-hours_left
    
-   if hours_elapsed == 0:  #special case of time has not started studnet cannot have slept already
+   if hours_elapsed == 0:  # special case of time has not started studnet cannot have slept already
       sleep_percentage=0
-   else: #calculate the precent of time spent sleeping
+   else: # calculate the precent of time spent sleeping
       sleep_percentage = hours_slept/hours_elapsed
    
-   if (sleep_percentage > MIN_SLEEP_PRECENT):   #if the student has slept enough he is alert
+   if (sleep_percentage > MIN_SLEEP_PRECENT):   # if the student has slept enough he is alert
       return(True)
    else: #student has not slept enough and is not alert
       return(False)
@@ -110,12 +110,12 @@ def attend_lecture(subj, hrs):
    global hours_left
    
    
-   if hours_left >= hrs and hrs > 0:   #If there are that many hours left in the week
+   if hours_left >= hrs and hrs > 0:   # If there are that many hours left in the week
       #add the knoledge learned and update the time
       knols_earned = knols_per_hour(subj,is_alert())*hrs
       hours_left -= hrs
       knol_total+=knols_earned
-   else: #Do nothing because there arent that many hours left
+   else: # Do nothing because there arent that many hours left
       return
 
 '''
@@ -127,7 +127,7 @@ def sleep(hrs):
 
    if hrs < 0 or hours_left < hrs:  # If hours is negative or there is not enough time in the week do nothing
       return
-   else: #Update the hours left and the hours slept
+   else: # Update the hours left and the hours slept
       hours_left -= hrs
       hours_slept += hrs
 
@@ -236,14 +236,14 @@ if __name__ == '__main__':
    print('\n')
    print('Test 3: Coffee Function')
 
-   #Test for basic functionality
+   # Test for basic functionality
    print('Test 3.1')
    sleep(7)
    drink_coffee()
    print('Last Coffe Time:', last_coffee_time)  # should be 113-7=106
    reset_week()                                 # reset the week for the next test
    
-   #Test for crash
+   # Test for crash
    print('Test 3.2')
    drink_coffee()
    sleep(3)
@@ -251,10 +251,45 @@ if __name__ == '__main__':
    print('Crash:', coffee_crash)                # should be false because was not less than 3 hours
    reset_week()                                 # reset the week for the next test
    
-   #Test for crash
+   # Test for crash
    print('Test 3.3')
    drink_coffee()
    sleep(2)
    drink_coffee()
    print('Crash:', coffee_crash)                # should be true because was less than 3 hours
    reset_week()                                 # reset the week for the next test
+
+
+
+   '''
+   Test 3
+   Alert Test
+   '''
+   print('\n')
+   print('Test 4: Is Alert ? Function')
+
+   #Test for basic sleep % functionality
+   print('Test 4.1')
+   sleep(7)
+   print(is_alert())          #should be true
+   reset_week()               # rest the week
+   
+   #Test for basic sleep % functionality
+   print('Test 4.1')
+   hours_left-=10
+   print(is_alert())          #should be true
+   reset_week()               # rest the week
+   
+   #Test for basic sleep % functionality
+   print('Test 4.1')
+   sleep(3)
+   hours_left-=7
+   print(is_alert())          #should be false sleep % is 3/10=30%
+   reset_week()               # rest the week
+   
+   #Test for basic sleep % functionality
+   print('Test 4.1')
+   sleep(3)
+   hours_left-=6.999
+   print(is_alert())          #should be true sleep % is just over 30%
+   reset_week()               # rest the week
