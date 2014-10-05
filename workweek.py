@@ -84,7 +84,7 @@ def is_alert():
    
    if coffee_crash:  # if the student has crashed on coffee already they cannot be alet for rest of week
       return(False)
-   if (abs(last_coffee_time-hours_left) <= 1):  # if the student has had coffee he is awake
+   if (abs(last_coffee_time-hours_left) < 1):  # if the student has had coffee he is awake
       return(True)
    
    # calcuate the hours that have elapsed
@@ -248,7 +248,7 @@ if __name__ == '__main__':
    drink_coffee()
    sleep(3)
    drink_coffee()
-   print('Crash:', coffee_crash)                # should be false because was not less than 3 hours
+   print('Crash:', coffee_crash)                # should be false; was not less than 3 hours
    reset_week()                                 # reset the week for the next test
    
    # Test for crash
@@ -256,7 +256,7 @@ if __name__ == '__main__':
    drink_coffee()
    sleep(2)
    drink_coffee()
-   print('Crash:', coffee_crash)                # should be true because was less than 3 hours
+   print('Crash:', coffee_crash)                # should be true; was less than 3 hours
    reset_week()                                 # reset the week for the next test
 
 
@@ -269,27 +269,69 @@ if __name__ == '__main__':
    print('Test 4: Is Alert ? Function')
 
    #Test for basic sleep % functionality
-   print('Test 4.1')
+   print('Test 4.1.1')
    sleep(7)
-   print(is_alert())          #should be true
+   print(is_alert())          # should be true; sleep is more than 30%
    reset_week()               # rest the week
    
-   #Test for basic sleep % functionality
-   print('Test 4.1')
+   #Test for sleep % functionality
+   print('Test 4.1.2')
    hours_left-=10
-   print(is_alert())          #should be true
+   print(is_alert())          # should be false; hasnt slept at all
    reset_week()               # rest the week
    
-   #Test for basic sleep % functionality
-   print('Test 4.1')
+   #Test for sleep % functionality
+   print('Test 4.1.3')
    sleep(3)
    hours_left-=7
-   print(is_alert())          #should be false sleep % is 3/10=30%
+   print(is_alert())          # should be false; sleep % is 3/10=30%
    reset_week()               # rest the week
    
-   #Test for basic sleep % functionality
-   print('Test 4.1')
+   #Test for sleep % functionality
+   print('Test 4.1.4')
    sleep(3)
    hours_left-=6.999
-   print(is_alert())          #should be true sleep % is just over 30%
+   print(is_alert())          # should be true; sleep % is just over 30%
+   reset_week()               # rest the week
+   
+   #Test for sleep % functionality
+   print('Test 4.1.5')
+   print(is_alert())          # 0 sleep bounday case; should be false
+   reset_week()               # rest the week
+   
+   #Test for coffee functionality
+   print('Test 4.2.1')
+   hours_left-=10
+   drink_coffee()
+   print(is_alert())          # should be ture; just drank coffee
+   reset_week()               # rest the week
+   
+   #Test for coffee functionality
+   print('Test 4.2.2')
+   drink_coffee()
+   hours_left-=1
+   print(is_alert())          #should be false; has been a full hours without coffee
+   reset_week()               # rest the week
+   
+   #Test for coffee crash functionality
+   print('Test 4.3.1')
+   drink_coffee()
+   drink_coffee()
+   print(is_alert())          #should be false; drank twice under 3 hours
+   reset_week()               # rest the week
+      
+   #Test for coffee crash functionality
+   print('Test 4.3.2')
+   drink_coffee()
+   hours_left-=2
+   drink_coffee()
+   print(is_alert())          #should be false; drank twice under 3 hours
+   reset_week()               # rest the week
+   
+   #Test for coffee crash functionality
+   print('Test 4.3.2')
+   drink_coffee()
+   hours_left-=3
+   drink_coffee()
+   print(is_alert())          #should be ture; 3 hour bounday case
    reset_week()               # rest the week
