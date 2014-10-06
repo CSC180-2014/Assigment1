@@ -39,7 +39,7 @@ def knols_per_hour(subj, is_alert):
    # Deterimns how many knols are gained based on the course
    if subj is 'CSC':
       knols_gained=4
-   elif subj is "MAT" or subj is "ESC" or subj is "PHY" or subj is "CIV":
+   elif subj is 'MAT' or subj is 'ESC' or subj is 'PHY' or subj is 'CIV':
       knols_gained=2
    else:
       return
@@ -82,7 +82,7 @@ def is_alert():
    global last_coffee_time
    global coffee_crash
    
-   if coffee_crash:  # if the student has crashed on coffee already they cannot be alet for rest of week
+   if coffee_crash:  # if the student has crashed on coffee already they cannot be alet for reset of week
       return(False)
    if (abs(last_coffee_time-hours_left) < 1):  # if the student has had coffee he is awake
       return(True)
@@ -146,7 +146,7 @@ def get_knol_amount():
    return(knol_total)
 
 '''
-Function rests the week. Just for testing purpouses.
+Function resets the week. Just for testing purpouses.
 '''
 def reset_week():
    global HOURS_IN_WEEK
@@ -176,9 +176,9 @@ if __name__ == '__main__':
    '''
    print('Test 1: Basic Functionality')  
    sleep(8)                    # sleep from 12AM to 8AM on Monday
-   attend_lecture("CSC", 2)    # attend the CSC lecture for 2 hours,
+   attend_lecture('CSC', 2)    # attend the CSC lecture for 2 hours,
                                # gain 2*4 = 8 knols
-   attend_lecture("MAT", 30)   # attend the MAT lecture for 30 hours,
+   attend_lecture('MAT', 30)   # attend the MAT lecture for 30 hours,
                                # gain 30*2 = 60 knols (note that since the
                                # student was alert at the start of the
                                # lecture, they gain two knols per hour for
@@ -262,7 +262,7 @@ if __name__ == '__main__':
 
 
    '''
-   Test 3
+   Test 4
    Alert Test
    '''
    print('\n')
@@ -272,53 +272,53 @@ if __name__ == '__main__':
    print('Test 4.1.1')
    sleep(7)
    print(is_alert())          # should be true; sleep is more than 30%
-   reset_week()               # rest the week
+   reset_week()               # reset the week
    
    #Test for sleep % functionality
    print('Test 4.1.2')
    hours_left-=10
    print(is_alert())          # should be false; hasnt slept at all
-   reset_week()               # rest the week
+   reset_week()               # reset the week
    
    #Test for sleep % functionality
    print('Test 4.1.3')
    sleep(3)
    hours_left-=7
    print(is_alert())          # should be false; sleep % is 3/10=30%
-   reset_week()               # rest the week
+   reset_week()               # reset the week
    
    #Test for sleep % functionality
    print('Test 4.1.4')
    sleep(3)
    hours_left-=6.999
    print(is_alert())          # should be true; sleep % is just over 30%
-   reset_week()               # rest the week
+   reset_week()               # reset the week
    
    #Test for sleep % functionality
    print('Test 4.1.5')
    print(is_alert())          # 0 sleep bounday case; should be false
-   reset_week()               # rest the week
+   reset_week()               # reset the week
    
    #Test for coffee functionality
    print('Test 4.2.1')
    hours_left-=10
    drink_coffee()
    print(is_alert())          # should be ture; just drank coffee
-   reset_week()               # rest the week
+   reset_week()               # reset the week
    
    #Test for coffee functionality
    print('Test 4.2.2')
    drink_coffee()
    hours_left-=1
    print(is_alert())          #should be false; has been a full hours without coffee
-   reset_week()               # rest the week
+   reset_week()               # reset the week
    
    #Test for coffee crash functionality
    print('Test 4.3.1')
    drink_coffee()
    drink_coffee()
    print(is_alert())          #should be false; drank twice under 3 hours
-   reset_week()               # rest the week
+   reset_week()               # reset the week
       
    #Test for coffee crash functionality
    print('Test 4.3.2')
@@ -326,7 +326,7 @@ if __name__ == '__main__':
    hours_left-=2
    drink_coffee()
    print(is_alert())          #should be false; drank twice under 3 hours
-   reset_week()               # rest the week
+   reset_week()               # reset the week
    
    #Test for coffee crash functionality
    print('Test 4.3.2')
@@ -334,4 +334,70 @@ if __name__ == '__main__':
    hours_left-=3
    drink_coffee()
    print(is_alert())          #should be ture; 3 hour bounday case
-   reset_week()               # rest the week
+   reset_week()               # reset the week
+
+
+
+   '''
+   Test 5
+   Alert Test
+   '''
+   print('\n')
+   print('Test 5: Knols per hours')
+
+   #Test classes
+   print('Test 5.1')
+   print(knols_per_hour('CIV',True))            # test regular class; should be 2
+   reset_week()                                 # reset the week
+   
+   #Test classes
+   print('Test 5.2')
+   print(knols_per_hour('CSC',True))            # test regular class; should be 4
+   reset_week()                                 # reset the week
+   
+   #Test classes
+   print('Test 5.3')
+   print(knols_per_hour('MAT',False))           # test regular class; should be 1 because not alert
+   reset_week()                                 # reset the week
+   
+   #Test classes
+   print('Test 5.4')
+   print(knols_per_hour('CSC',False))           # test regular class; should be 2 because not alert
+   reset_week()                                 # reset the week
+   
+   #Test classes
+   print('Test 5.5')
+   print(knols_per_hour('NOT A CLASS',True))    # test regular class; should be nothing because not a real class
+   reset_week()                                 # reset the week
+
+
+
+   '''
+   Test 6
+   Attend Lecture
+   '''
+   print('\n')
+   print('Test 6: Going to Class')
+
+   #Test going to classes
+   print('Test 6.1')
+   drink_coffee()
+   attend_lecture('CSC', 5)    # should be 20= 4*5
+   print(get_knol_amount())
+   reset_week()                # reset the week
+   
+   #Test going to classes
+   print('Test 6.2')
+   attend_lecture('CSC', 5)    # should be 20= 2*5; because not alert
+   print(get_knol_amount())
+   reset_week()                # reset the week
+   
+   #Test going to classes
+   print('Test 6.3')
+   drink_coffee()
+   attend_lecture('CSC', 5)    # should be 20= 4*5
+   print(get_knol_amount())
+   drink_coffee()
+   attend_lecture('CIV', 5)    # should be 10= 2*5
+   print(get_knol_amount())
+   reset_week()                # reset the week  
