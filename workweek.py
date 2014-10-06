@@ -111,7 +111,7 @@ def attend_lecture(subj, hrs):
    
    
    if hours_left >= hrs and hrs > 0:   # If there are that many hours left in the week
-      #add the knoledge learned and update the time
+      # add the knoledge learned and update the time
       knols_earned = knols_per_hour(subj,is_alert())*hrs
       hours_left -= hrs
       knol_total+=knols_earned
@@ -240,7 +240,7 @@ if __name__ == '__main__':
    print('Test 3.1')
    sleep(7)
    drink_coffee()
-   print('Last Coffe Time:', last_coffee_time)  # should be 113-7=106
+   print('Last Coffee Time:', last_coffee_time)  # should be 113-7=106
    reset_week()                                 # reset the week for the next test
    
    # Test for crash
@@ -277,7 +277,7 @@ if __name__ == '__main__':
    #Test for sleep % functionality
    print('Test 4.1.2')
    hours_left-=10
-   print(is_alert())          # should be false; hasnt slept at all
+   print(is_alert())          # should be false; hasn't slept at all
    reset_week()               # reset the week
    
    #Test for sleep % functionality
@@ -310,14 +310,14 @@ if __name__ == '__main__':
    print('Test 4.2.2')
    drink_coffee()
    hours_left-=1
-   print(is_alert())          #should be false; has been a full hours without coffee
+   print(is_alert())          # should be false; has been a full hour without coffee
    reset_week()               # reset the week
    
    #Test for coffee crash functionality
    print('Test 4.3.1')
    drink_coffee()
    drink_coffee()
-   print(is_alert())          #should be false; drank twice under 3 hours
+   print(is_alert())          # should be false; drank twice under 3 hours
    reset_week()               # reset the week
       
    #Test for coffee crash functionality
@@ -325,7 +325,7 @@ if __name__ == '__main__':
    drink_coffee()
    hours_left-=2
    drink_coffee()
-   print(is_alert())          #should be false; drank twice under 3 hours
+   print(is_alert())          # should be false; drank twice under 3 hours
    reset_week()               # reset the week
    
    #Test for coffee crash functionality
@@ -333,7 +333,7 @@ if __name__ == '__main__':
    drink_coffee()
    hours_left-=3
    drink_coffee()
-   print(is_alert())          #should be ture; 3 hour bounday case
+   print(is_alert())          # should be true; 3 hour boundary case
    reset_week()               # reset the week
 
 
@@ -388,7 +388,7 @@ if __name__ == '__main__':
    
    #Test going to classes
    print('Test 6.2')
-   attend_lecture('CSC', 5)    # should be 20= 2*5; because not alert
+   attend_lecture('CSC', 5)    # should be 10= 2*5; because not alert
    print(get_knol_amount())
    reset_week()                # reset the week
    
