@@ -54,7 +54,7 @@ def knols_per_hour(subj, is_alert):
 '''
 Function record the time that the studnet drinks coffee at. If the studnet drinks
 coffee to frequently (less than MIN_COFFEE_INTERVAL) then it determins the sudent
-has crashed
+has crashed. Stores what time coffee was taken at last_coffee_time, and may set crash to true.
 '''
 def drink_coffee():
    global last_coffee_time
@@ -104,6 +104,7 @@ def is_alert():
 Function addes to the knoledge learned baised on how long the student goes to class.
 Function expects a valid course code (String) and a number of hours (int).
 If there are not that many hours left in the week the function does nothing.
+Adds to knol_total and updates hours_left.
 '''
 def attend_lecture(subj, hrs):
    global knol_total
@@ -121,9 +122,11 @@ def attend_lecture(subj, hrs):
 '''
 Function keeps track of hours slept by student and expects # hours slept (int)
 If there are not that many hours left in the week the function does nothing.
+Adss to hours slept and updates hours left.
 '''
 def sleep(hrs):
-   global hours_left, hours_slept
+   global hours_left
+   global hours_slept
 
    if hrs < 0 or hours_left < hrs:  # If hours is negative or there is not enough time in the week do nothing
       return
