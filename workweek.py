@@ -13,7 +13,7 @@ Author: Michael Guerzhoy.  Last modified: Sept. 22, 2014
 
 """
 Submitted by: Ryan Tam, Francis Kang
-CSC1800
+CSC180
 """
 
 
